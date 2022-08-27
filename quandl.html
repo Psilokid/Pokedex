@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quandl</title>
+    <style>
+        h1,
+        h2,
+        p {
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        const API_KEY = "nHDk3P7iMf6H_yFyGWTL"
+
+        async function loadCourse() {
+
+            let startDate = "2022-05-22"
+            let endDate = "2022-05-22"
+            let url = `https://data.nasdaq.com/api/v3/datasets/BITFINEX/LUNAF0USTF0?start_date=${startDate}startDate&end_date=${endDate}&api_key=${API_KEY}`;
+            let response = await fetch(url);
+            let responseJson = await response.json();
+            console.log("this is my new json", responseJson);
+
+            getData(responseJson);
+        }
+
+        function getData(responseJson) {
+            let tradedToday = responseJson['dataset']['data'][0][7];
+            let container = document.getElementById('container');
+            container.innerHTML = `Der Bitoin wurde am 22.05.22 <b>${tradedToday}</b> gehandelt`;
+
+        }
+    </script>
+
+</head>
+
+<body onload="loadCourse()">
+
+    <H1>Quandl - API's</H1>
+
+    <h2>Wie viel kostet ein Bitcoin ?</h2>
+
+    <p id="container"></p>
+
+
+</body>
+
+</html>

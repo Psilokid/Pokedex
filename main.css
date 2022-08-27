@@ -1,0 +1,162 @@
+body {
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    background-image: url(./img/background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+body,
+h1,
+h2,
+p,
+a,
+img {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    flex: 1;
+    gap: 2.5rem;
+}
+
+.place_head {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.icon_head {
+    width: 20rem;
+    height: 5rem;
+}
+
+.place_nav_input {
+    display: flex;
+    align-items: center;
+    height: min-content;
+    background-color: rgba(255, 255, 255, 0.28);
+    width: 20rem;
+    padding: 10px 20px;
+    border-radius: 2.5px;
+}
+
+.nav_input {
+    flex: 1;
+    font-size: 1.1rem;
+    background: none;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    font-family: "Montserrat";
+    letter-spacing: 0.05rem;
+}
+
+.nav_input::placeholder {
+    opacity: 0.9;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.place_heart {
+    flex: 0.3;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 3rem;
+}
+
+.icon_heart {
+    color: white;
+    font-size: 2.5rem;
+    opacity: 0.4;
+}
+
+.icon_heart:hover {
+    opacity: 0.8;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.place_content {
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    padding-top: 2rem;
+}
+
+.box_content {
+    width: 22.5rem;
+    height: 8rem;
+    display: flex;
+    justify-content: space-between;
+    backdrop-filter: blur(4px);
+    background-color: transparent;
+    border: solid 1px white;
+    border-radius: 0.8rem;
+    padding: 2rem 1.75rem;
+}
+
+.place_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.pokemon_head {
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    color: white;
+}
+
+.pokemon_num {
+    color: white;
+    font-size: 1.25rem;
+    flex: 1;
+}
+
+.pokemon_img {
+    width: 10rem;
+    height: 10rem;
+    transition: transform 500ms ease-in-out;
+    align-self: center;
+}
+
+.box_content:hover>.pokemon_img {
+    transform: scale(1.2);
+}
+
+.place_characteristics {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.285);
+    border-radius: 5rem;
+}
+
+.icon_characteristics {
+    width: 1rem;
+    height: 1rem;
+    background-color: rgba(255, 255, 255, 0.556);
+    border-radius: 100%;
+    padding: 0.2rem;
+}
+
+.characteristics {
+    color: white;
+}
