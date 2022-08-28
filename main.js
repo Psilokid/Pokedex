@@ -1,7 +1,9 @@
 let url = `https://pokeapi.co/api/v2/pokemon/`;
 let allPokemon = [];
-let currentPokemon;
+let likedPokemons = [];
 let stats = [];
+let placePokemon = document.querySelector('.place_content');
+let pokemonImg = allPokemon[i]['sprites']['other']['dream_world']['front_default'];
 
 
 async function GetPokemons() {
@@ -9,25 +11,24 @@ async function GetPokemons() {
         const pokemonUrl = url + (i + 1);
 
         let response = await fetch(pokemonUrl);
-        currentPokemon = await response.json();
+        let currentPokemon = await response.json();
         allPokemon.push(currentPokemon);
         renderPokemon(i);
         renderTypes(i);
 
     }
 
-    console.log('API answers', currentPokemon);
+
 }
 
 function renderPokemon(i) {
-    let placePokemon = document.querySelector('.place_content');
-    let pokemonImg = currentPokemon['sprites']['other']['dream_world']['front_default'];
+    let pokemonImg = allPokemon[i]['sprites']['other']['dream_world']['front_default'];
 
     placePokemon.innerHTML += /*html*/ `    
         <div onclick="openPokemon(${i})" class="box_content">
             <div class="place_info">
-                <h1 class="pokemon_head">${currentPokemon['name']}</h1>
-                <h2 class="pokemon_num">#${currentPokemon['id']}</h2>
+                <h1 class="pokemon_head">${allPokemon[i]['name']}</h1>
+                <h2 class="pokemon_num">#${allPokemon[i]['id']}</h2>
                 <div id="place_characteristics${i}" class="place_characteristics">
 
                 </div>
@@ -39,10 +40,14 @@ function renderPokemon(i) {
 
 
 function renderTypes(i) {
+    let placeCharacteristics = document.getElementById('place_characteristics' + i);
+    placeCharacteristics.innerHTML = "";
+
     for (let j = 0; j < allPokemon[i]['types'].length; j++) {
         let type = allPokemon[i]['types'][j];
 
-        document.getElementById('place_characteristics' + i).innerHTML += `
+
+        placeCharacteristics.innerHTML += `
             <div class="box_characteristics">
                 <div class="box_icon">
                     <img class="icon_characteristics" src="icons/${type['type']['name']}.png">
@@ -91,7 +96,6 @@ function abilityBar(i) {
 }
 
 function checkBar(j) {
-    console.log(stats);
     if (stats[j] >= 50) {
         document.getElementById('bar' + j).style.backgroundColor = "#115411";
     } else {
@@ -100,6 +104,92 @@ function checkBar(j) {
 
 
 }
+
+function nextPokemon(i) {
+    let x = i == allPokemon.length - 1 ? allPokemon[0]['name'] : allPokemon[i + 1]['name'];
+    return x;
+}
+
+function prevPokemon(i) {
+    if (i == 1) {
+        return allPokemon[0]['name'];
+
+    } else if (i == 0) {
+        return allPokemon[allPokemon.length - 1]['name']
+
+    } else {
+        return allPokemon[i - 1]['name'];
+    }
+
+}
+
+function switchNext(i) {
+    let x = i == allPokemon.length - 1 ? openPokemon(0) : openPokemon(i + 1);
+}
+
+function switchPrev(i) {
+    if (i == 1) {
+        openPokemon(0);
+
+    } else if (i == 0) {
+        openPokemon(allPokemon.length - 1);
+
+    } else {
+        openPokemon(i - 1);
+    }
+}
+
+function filterPokemons() {
+    let search = document.getElementById('navInput').value;
+    search = search.toLowerCase();
+    placePokemon.innerHTML = "";
+
+    for (let i = 0; i < allPokemon.length; i++) {
+        const Pokemon = allPokemon[i];
+        console.log(Pokemon['name']);
+        if (Pokemon['name'].toLowerCase().includes(search)) {
+            renderPokemon(i);
+        }
+    }
+
+}
+
+function likePokemon(i) {
+    let heart = document.getElementById('heart');
+    let currrentPokemon = allPokemon[i];
+    if (heart.classList.contains('far')) {
+        heart.classList.remove('far');
+        heart.classList.add('fas');
+        likedPokemons.push(currrentPokemon);
+    } else {
+        heart.classList.add('far');
+        heart.classList.remove('fas');
+        likedPokemons.splice(i, 1)
+    }
+    console.log(likedPokemons)
+
+}
+
+function renderfavoritePokemons() {
+    placePokemon.innerHTML = "";
+
+    for (let i = 0; i < likedPokemons.length; i++) {
+        let pokemonImg = likedPokemons[i]['sprites']['other']['dream_world']['front_default'];
+        placePokemon.innerHTML += /*html*/ `
+         <div onclick="openPokemon(${i})" class="box_content">
+            <div class="place_info">
+                <h1 class="pokemon_head">${likedPokemons[i]['name']}</h1>
+                <h2 class="pokemon_num">#${likedPokemons[i]['id']}</h2>
+                <div id="place_characteristics${i}" class="place_characteristics">
+                
+                </div>
+            </div>
+            <img class="pokemon_img" src="${pokemonImg}" alt="pokemon">
+        </div>
+        `
+    }
+}
+
 
 
 function openPokemon(i) {
@@ -114,16 +204,16 @@ function openPokemon(i) {
             <div class="navbar_op">
                 <button onclick="backToOverview()" class="btn_back">
                   <img class="img_back" src="./icons/back.png" />
-                  <p>back to overview</p>
+                  <p>Back to Overview</p>
                </button>
                 <div class="box_switch_op">
-                    <button class="switch_outside">Bulbarsaur</button>
-                    <button class="switch_mid">Ivysaur</button>
-                    <button class="switch_outside">Venusaur</button>
+                    <button  onclick="switchPrev(${i})" class="switch_outside">${prevPokemon(i)}</button>
+                    <button class="switch_mid">${allPokemon[i]['name']}</button>
+                    <button  onclick="switchNext(${i})" class="switch_outside">${nextPokemon(i)}</button>
                 </div>
-                <button class="place_heart_op">
+                <button onclick="likePokemon(${i})" class="place_heart_op">
                   <span class="icon_heart"
-                     ><i class="fa-solid far fa-heart"></i
+                     ><i id="heart" class="fa-thin far fa-heart"></i
                   ></span>
                </button>
             </div>

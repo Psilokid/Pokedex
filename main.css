@@ -45,6 +45,7 @@ button {
 .icon_head {
     width: 20rem;
     height: 5rem;
+    cursor: pointer;
 }
 
 .place_nav_input {
@@ -90,6 +91,7 @@ button {
     color: white;
     font-size: 2.5rem;
     opacity: 0.4;
+    cursor: pointer;
 }
 
 .icon_heart:hover {
@@ -116,11 +118,12 @@ main {
     height: 9rem;
     display: flex;
     justify-content: space-between;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(4px);
     background-color: transparent;
     border: solid 1px white;
     border-radius: 0.8rem;
     padding: 1.5rem 1.75rem;
+    cursor: pointer;
 }
 
 .place_info {
@@ -232,6 +235,15 @@ main {
     backdrop-filter: blur(8px);
     box-shadow: 0 0 1px 0.2px rgb(255 255 255);
     padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.btn_back:hover {
+    background-color: rgba(255, 255, 255, 0.318);
+}
+
+.img_back {
+    width: 0.9rem;
 }
 
 .box_switch_op {
@@ -244,6 +256,8 @@ main {
     opacity: 0.5;
     color: white;
     letter-spacing: 0.075rem;
+    text-transform: capitalize;
+    font-size: 1.1rem;
 }
 
 .switch_outside:hover {
@@ -251,23 +265,16 @@ main {
 }
 
 .switch_mid {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 500;
     letter-spacing: 0.1rem;
     color: white;
+    text-transform: capitalize;
 }
 
 .place_heart_op {
     display: flex;
     justify-content: flex-end;
-}
-
-.btn_back:hover {
-    background-color: rgba(255, 255, 255, 0.318);
-}
-
-.img_back {
-    width: 1.4rem;
 }
 
 .main_content_op {
@@ -344,7 +351,7 @@ main {
 }
 
 .main_img_op {
-    width: 20rem;
+    width: 14rem;
 }
 
 .place_info_op {
