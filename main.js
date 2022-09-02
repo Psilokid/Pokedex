@@ -14,27 +14,29 @@ async function GetPokemons() {
         let response = await fetch(pokemonUrl);
         let currentPokemon = await response.json();
         allPokemon.push(currentPokemon);
+
+
+        renderPokemon(i);
+        renderTypes(i);
+    }
+
+}
+
+function renderFeed() {
+    document.getElementById('navInput').value = "";
+    placePokemon.innerHTML = "";
+    currentSelection = allPokemon;
+    for (let i = 0; i < currentSelection.length; i++) {
         renderPokemon(i);
         renderTypes(i);
     }
 }
 
+
 function renderPokemon(i) {
     currentSelection = allPokemon;
-    let pokemonImg = currentSelection[i]['sprites']['other']['dream_world']['front_default'];
+    placePokemon.innerHTML += generatePokemons(i);
 
-
-    placePokemon.innerHTML += /*html*/ `    
-        <div onclick="openPokemon(${i})" class="box_content">
-            <div class="place_info">
-                <h1 class="pokemon_head">${currentSelection[i]['name']}</h1>
-                <h2 class="pokemon_num">${calculateId(i)}</h2>
-                <div id="place_characteristics${i}" class="place_characteristics">
-
-                </div>
-            </div>
-            <img class="pokemon_img" src="${pokemonImg}" alt="pokemon">
-        </div>`
 }
 
 
@@ -45,16 +47,7 @@ function renderTypes(i) {
     for (let j = 0; j < currentSelection[i]['types'].length; j++) {
         let type = currentSelection[i]['types'][j];
 
-
-        placeCharacteristics.innerHTML += `
-            <div class="box_characteristics">
-                <div class="box_icon">
-                    <img class="icon_characteristics" src="icons/${type['type']['name']}.png">
-                </div>
-                <p  class="characteristics">
-                    ${type['type']['name']}
-                </p>
-             </div>`
+        placeCharacteristics.innerHTML += generateTypes(i, type);
     }
 }
 
@@ -62,17 +55,17 @@ function renderTypesOp(i) {
 
     for (let j = 0; j < currentSelection[i]['types'].length; j++) {
         let type = currentSelection[i]['types'][j];
-        document.getElementById('headingCharacteristics').innerHTML += ` 
-    <p class="characteristics_op">${type['type']['name']}</p>`
+
+        document.getElementById('headingCharacteristics').innerHTML += generateTypesOp(type);
     }
 }
 
 function cmToMeter() {
-    let centimeter = document.getElementById('pommes').textContent;
+    let centimeter = document.getElementById('length').textContent;
     centimeter = parseFloat(centimeter);
     let meter = centimeter / 10;
 
-    document.getElementById("pommes").innerHTML = `${meter} Meter`;
+    document.getElementById("length").innerHTML = `${meter} Meter`;
 
 }
 
@@ -83,26 +76,20 @@ function abilityBar(i) {
         let stat = currentSelection[i]['stats'][j]['base_stat'];
         stats.push(stat);
 
-        box_bar.innerHTML += /*html*/ `
-            <div class="box_num_bar">
-                <div class="box_bar">
-                    <div id="bar${j}" class="bar"></div>
-                </div>
-                <p>${stat}</p>
-            </div>`
-        document.getElementById('bar' + j).style.width = `${stat - 10}%`;
-        checkBar(j);
+        box_bar.innerHTML += generateBar(j, stat);
+
+        styleBar(j, stat);
     }
 }
 
-function checkBar(j) {
+function styleBar(j, stat) {
+    document.getElementById('bar' + j).style.width = `${stat - 10}%`;
+
     if (stats[j] >= 50) {
         document.getElementById('bar' + j).style.backgroundColor = "#115411";
     } else {
         document.getElementById('bar' + j).style.backgroundColor = "#861010 ";
     }
-
-
 }
 
 function nextPokemon(i) {
@@ -147,72 +134,56 @@ function filterPokemons() {
     for (let i = 0; i < currentSelection.length; i++) {
         const Pokemon = currentSelection[i];
         if (Pokemon['name'].toLowerCase().includes(search)) {
-            renderPokemon(i);
+            currentSelection === likedPokemons ? generateFavoritePokemons(i) : renderPokemon(i);
+            renderTypes(i);
         }
     }
 
 }
 
-function likeToLocalStorage() {
-
-    if (localStorage.getItem("fav") != null) {
-        getFav = localStorage.fav;
-        $(".item").addClass('favorites');
-    }
-    $(document).ready(function() {
-        $('.btn').on('click', function() {
-            getFav = localStorage.fav;
-            //$(".item").removeClass('favorites');
-            //localStorage.removeItem('background');
-            $(this).closest(".item").toggleClass('favorites');
-            if ($(this).closest(".item").hasClass('favorites')) {
-                localStorage.setItem('fav', 'favorites');
-
-            } else {
-                localStorage.removeItem('fav');
-            }
-
-        });
-    });
-}
-
 function likePokemon(i) {
     let heart = document.getElementById('heart');
-    let currentPokemon = allPokemon[i];
+    let currentPokemon = currentSelection[i];
     if (heart.classList.contains('far')) {
         heart.classList.remove('far');
         heart.classList.add('fas');
-
+        deleteDuplicates(currentPokemon);
     } else {
         heart.classList.add('far');
         heart.classList.remove('fas');
-        likedPokemons.splice(i, 1)
-    }
-
-    if (!likedPokemons.includes(currentPokemon)) {
-        likedPokemons.push(currentPokemon);
+        likedPokemons.splice(currentPokemon, 1);
     }
     saveLike();
 }
 
+function addLikeSymbol(i) {
+    let heart = document.getElementById('heart');
+    const filteredPokemons = likedPokemons.filter((pokemon) => {
+        if (pokemon.name == currentSelection[i].name) {
+            heart.classList.remove('far');
+            heart.classList.add('fas');
+        }
+    })
+
+}
+
+function deleteDuplicates(currentPokemon) {
+    const filteredPokemons = likedPokemons.filter((pokemon) => {
+        return pokemon.name !== currentPokemon.name
+    })
+
+    likedPokemons = [...filteredPokemons, currentPokemon]
+}
+
+
+
 function renderfavoritePokemons() {
     loadLike();
+    document.getElementById('navInput').value = "";
     placePokemon.innerHTML = "";
     currentSelection = likedPokemons;
     for (let i = 0; i < currentSelection.length; i++) {
-        let pokemonImg = currentSelection[i]['sprites']['other']['dream_world']['front_default'];
-        placePokemon.innerHTML += /*html*/ `
-         <div onclick="openPokemon(${i})" class="box_content">
-            <div class="place_info">
-                <h1 class="pokemon_head">${currentSelection[i]['name']}</h1>
-                <h2 class="pokemon_num">${calculateId(i)}</h2>
-                <div id="place_characteristics${i}" class="place_characteristics">
-                
-                </div>
-            </div>
-            <img class="pokemon_img" src="${pokemonImg}" alt="pokemon">
-        </div>
-        `
+        generateFavoritePokemons(i);
         renderTypes(i);
     }
 
@@ -239,7 +210,6 @@ function saveLike() {
 function loadLike() {
     let getfavoritePokemons = localStorage.getItem('favoritePokemons')
 
-
     likedPokemons = JSON.parse(getfavoritePokemons);
 }
 
@@ -247,7 +217,6 @@ function loadLike() {
 
 function openPokemon(i) {
     let containerOpenPokemon = document.getElementById('containerOpenPokemon');
-    let pokemonImg = currentSelection[i]['sprites']['other']['dream_world']['front_default'];
 
     containerOpenPokemon.innerHTML = /*html*/ `
        <div id="PlaceOpenedPokemon" class="place_opened_pokemon">
@@ -285,7 +254,7 @@ function openPokemon(i) {
                         <div class="place_about_op">
                             <div class="box_about_op">
                                 <p>Height</p>
-                                <p id="pommes">${currentSelection[i]['height']} Meter</p>
+                                <p id="length">${currentSelection[i]['height']} Meter</p>
                             </div>
                             <div class="box_about_op">
                                 <p>Weight</p>
@@ -298,7 +267,7 @@ function openPokemon(i) {
                         </div>
                     </div>
                     <div class="box_main_img_op">
-                        <img class="main_img_op" src="${pokemonImg}" />
+                        <img class="main_img_op" src="${currentSelection[i]['sprites']['other']['dream_world']['front_default']}" />
                     </div>
                 </div>
             </div>
@@ -319,6 +288,9 @@ function openPokemon(i) {
                 </div>
             </div>
         </div>`
+
+
+    addLikeSymbol(i);
     renderTypesOp(i);
     cmToMeter();
     abilityBar(i);
@@ -330,4 +302,60 @@ function backToOverview() {
     containerOpenPokemon.innerHTML = "";
 
 
+}
+
+function generatePokemons(i) {
+
+    return `    
+    <div onclick="openPokemon(${i})" class="box_content">
+        <div class="place_info">
+            <h1 class="pokemon_head">${currentSelection[i]['name']}</h1>
+            <h2 class="pokemon_num">${calculateId(i)}</h2>
+            <div id="place_characteristics${i}" class="place_characteristics">
+
+            </div>
+        </div>
+        <img class="pokemon_img" src="${currentSelection[i]['sprites']['other']['dream_world']['front_default']}" alt="pokemon">
+    </div>`
+}
+
+function generateTypes(i, type) {
+    return `
+            <div class="box_characteristics">
+                <div class="box_icon">
+                    <img class="icon_characteristics" src="icons/${type['type']['name']}.png">
+                </div>
+                <p  class="characteristics">
+                    ${type['type']['name']}
+                </p>
+             </div>`
+}
+
+function generateTypesOp(type) {
+    return ` 
+    <p class="characteristics_op">${type['type']['name']}</p>`
+}
+
+function generateBar(j, stat) {
+    return `
+            <div class="box_num_bar">
+                <div class="box_bar">
+                    <div id="bar${j}" class="bar"></div>
+                </div>
+                <p>${stat}</p>
+            </div>`
+}
+
+function generateFavoritePokemons(i) {
+    placePokemon.innerHTML += `
+    <div onclick="openPokemon(${i})" class="box_content">
+       <div class="place_info">
+           <h1 class="pokemon_head">${currentSelection[i]['name']}</h1>
+           <h2 class="pokemon_num">${calculateId(i)}</h2>
+           <div id="place_characteristics${i}" class="place_characteristics">
+           
+           </div>
+       </div>
+       <img class="pokemon_img" src="${currentSelection[i]['sprites']['other']['dream_world']['front_default']}" alt="pokemon">
+   </div>`
 }
