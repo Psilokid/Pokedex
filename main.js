@@ -216,13 +216,27 @@ function loadLike() {
     likedPokemons = JSON.parse(getfavoritePokemons);
 }
 
+function backToOverview() {
+    let containerOpenPokemon = document.getElementById('containerOpenPokemon');
+
+    containerOpenPokemon.innerHTML = "";
 
 
+}
 
 function openPokemon(i) {
     let containerOpenPokemon = document.getElementById('containerOpenPokemon');
 
-    containerOpenPokemon.innerHTML = /*html*/ `
+    containerOpenPokemon.innerHTML = generateOpenPokemon(i);
+
+    addLikeSymbol(i);
+    renderTypesOp(i);
+    cmToMeter();
+    abilityBar(i);
+}
+
+function generateOpenPokemon(i) {
+    return `
        <div id="PlaceOpenedPokemon" class="place_opened_pokemon">
             <div class="place_id">
                 <p class="id">${calculateId(i)}</p> 
@@ -293,20 +307,6 @@ function openPokemon(i) {
                 </div>
             </div>
         </div>`
-
-
-    addLikeSymbol(i);
-    renderTypesOp(i);
-    cmToMeter();
-    abilityBar(i);
-}
-
-function backToOverview() {
-    let containerOpenPokemon = document.getElementById('containerOpenPokemon');
-
-    containerOpenPokemon.innerHTML = "";
-
-
 }
 
 function generatePokemons(i) {
