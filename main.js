@@ -6,6 +6,7 @@ let placePokemon = document.querySelector('.place_content');
 let currentSelection;
 
 
+
 async function GetPokemons() {
     placePokemon.innerHTML = "";
     for (let i = 0; i < 15; i++) {
@@ -189,6 +190,8 @@ function renderfavoritePokemons() {
 
 }
 
+
+
 function calculateId(i) {
     let id = currentSelection[i]['id'];
     if (i < 10) {
@@ -215,6 +218,7 @@ function loadLike() {
 
 
 
+
 function openPokemon(i) {
     let containerOpenPokemon = document.getElementById('containerOpenPokemon');
 
@@ -226,7 +230,8 @@ function openPokemon(i) {
             <div class="navbar_op">
                 <button onclick="backToOverview()" class="btn_back">
                   <img class="img_back" src="./icons/back.png" />
-                  <p>Back to Overview</p>
+                  <p class="d-none_btnback_des" id="btnBack">Back to Overview</p>
+                  <p class="d-none_btnback_res" id="btnBack"</p>
                </button>
                 <div class="box_switch_op">
                     <button  onclick="switchPrev(${i})" class="switch_outside">${prevPokemon(i)}</button>
@@ -273,7 +278,7 @@ function openPokemon(i) {
             </div>
             <div class="place_info_op">
                 <div class="box_info_op">
-                    <h2>Stats</h2>
+                    <h2 class="d-none_stats">Stats</h2>
                     <div class="box_stats_name">
                         <div>Hp</div>
                         <div>Attack</div>

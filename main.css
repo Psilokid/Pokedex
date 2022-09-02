@@ -21,6 +21,16 @@ button {
     color: white;
 }
 
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.place_nav {
+    justify-content: center;
+}
+
 nav {
     height: 5rem;
     display: flex;
@@ -31,21 +41,19 @@ nav {
     gap: 2.5rem;
 }
 
-button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-}
-
 .place_head {
     display: flex;
     justify-content: flex-start;
 }
 
-.icon_head {
-    width: 20rem;
-    height: 5rem;
+.btn_heading {
     cursor: pointer;
+    padding-left: 3rem;
+}
+
+.icon_head {
+    width: 16rem;
+    height: 5rem;
 }
 
 .place_nav_input {
@@ -83,8 +91,7 @@ button {
 .place_heart {
     flex: 0.3;
     display: flex;
-    justify-content: flex-end;
-    padding-right: 3rem;
+    justify-content: center;
 }
 
 .icon_heart {
@@ -114,7 +121,7 @@ main {
 }
 
 .box_content {
-    width: 20.5rem;
+    width: 20rem;
     height: 9rem;
     display: flex;
     justify-content: space-between;
@@ -406,4 +413,132 @@ main {
 .place_characteristics_opened {
     display: flex;
     gap: 2rem;
+}
+
+.d-none_heart_res {
+    display: none;
+}
+
+.d-none_heart_des {
+    display: unset;
+}
+
+.d-none_btnback_res {
+    display: none;
+}
+
+.d-none_btnback_des {
+    display: unset;
+}
+
+@media screen and (max-width: 1495px) {
+    .place_content {
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    .place_content {
+        width: 90.5%;
+    }
+    .btn_heading {
+        padding-left: 0;
+    }
+}
+
+@media screen and (max-width:890px) {
+    html {
+        font-size: 14px;
+    }
+    nav {
+        flex-direction: column;
+        padding: 0 3rem;
+        gap: 1.5rem;
+    }
+    .place_heart {
+        position: absolute;
+        right: 3rem;
+        top: 3.25rem;
+    }
+    .place_head {
+        flex: 1;
+        justify-content: center;
+        padding-top: 2rem;
+    }
+    main {
+        margin-top: 8.5rem;
+    }
+    .icon_head {
+        height: 7rem;
+        width: 23rem;
+    }
+    .place_main_op {
+        gap: 2rem;
+    }
+    .d-none_stats {
+        display: none;
+    }
+    .box_main_img_op {
+        position: absolute;
+        top: 6.5rem;
+        right: 5rem;
+    }
+    .main_img_op {
+        width: 12rem;
+    }
+    .id {
+        font-size: 13rem;
+    }
+    .d-none_btnback_res {
+        display: unset;
+    }
+    .d-none_btnback_des {
+        display: none;
+        padding: 5rem;
+    }
+}
+
+@media screen and (max-width:520px) {
+    .place_content {
+        width: 87.5%;
+    }
+    html {
+        font-size: 12px;
+    }
+    .place_nav_input {
+        width: 7.5rem;
+        height: 1.5rem;
+    }
+    .place_input_heart_res {
+        width: 75%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+    }
+    .icon {
+        display: none;
+    }
+    .d-none_heart_res {
+        display: unset;
+    }
+    .place_heart {
+        position: unset;
+        flex: 0;
+    }
+    .d-none_heart_des {
+        display: none;
+    }
+    .box_main_img_op {
+        position: absolute;
+        top: 9rem;
+        right: 4rem;
+    }
+    .id {
+        padding-top: 3rem;
+        font-size: 10rem;
+    }
+    .box_switch_op {
+        gap: 0.5rem;
+    }
 }

@@ -15,21 +15,29 @@
 </head>
 
 <body onload="GetPokemons()">
-    <nav>
-        <div class="place_head">
-            <button onclick="renderFeed()" class="btn_heading">
+    <div class="place_nav">
+        <nav>
+            <div class="place_head">
+                <button onclick="renderFeed()" class="btn_heading">
                 <svg  class="icon_head"><use href="icon.svg#icon_head" /></svg>
             </button>
-        </div>
-        <div class="place_nav_input">
-            <input id="navInput" onkeyup="filterPokemons()" class="nav_input" type="text" placeholder="Search here" />
-            <img class="icon" src="./img/search.ico" />
-        </div>
-        <div class="place_heart">
-            <span onclick="renderfavoritePokemons()" class="icon_heart"><i class="fa-solid far fa-heart"></i
+            </div>
+            <div class="place_input_heart_res">
+                <div class="place_nav_input  d-none_input_des">
+                    <input id="navInput" onkeyup="filterPokemons()" class="nav_input" type="text" placeholder="Search here" />
+                    <img class="icon" src="./img/search.ico" />
+                </div>
+                <div class="place_heart d-none_heart_res">
+                    <span onclick="renderfavoritePokemons()" class="icon_heart"><i class="fa-solid far fa-heart"></i
+                    ></span>
+                </div>
+            </div>
+            <div class="place_heart d-none_heart_des">
+                <span onclick="renderfavoritePokemons()" class="icon_heart"><i class="fa-solid far fa-heart"></i
             ></span>
-        </div>
-    </nav>
+            </div>
+        </nav>
+    </div>
     <main>
         <div class="place_content"></div>
         <div id="containerOpenPokemon"></div>
