@@ -2,13 +2,13 @@ let url = `https://pokeapi.co/api/v2/pokemon/`;
 let allPokemon = [];
 let likedPokemons = [];
 let stats = [];
+let ability = ['Hp', 'Attack', 'Defense', 'Speacial Attack', 'Special Defense', 'Speed']
 let placePokemon = document.querySelector('.place_content');
 let currentSelection;
 
 
 
 async function GetPokemons() {
-    placePokemon.innerHTML = "";
     for (let i = 0; i < 15; i++) {
         const pokemonUrl = url + (i + 1);
 
@@ -16,11 +16,22 @@ async function GetPokemons() {
         let currentPokemon = await response.json();
         allPokemon.push(currentPokemon);
 
-
-        renderPokemon(i);
-        renderTypes(i);
     }
+    renderFeed();
+}
 
+async function loadMorePokemons() {
+
+    for (let i = 0; i < 15; i++) {
+        const pokemonUrl = (url + (allPokemon.length + 1))
+
+        let response = await fetch(pokemonUrl);
+        let currentPokemon = await response.json();
+        allPokemon.push(currentPokemon);
+
+
+    }
+    renderFeed();
 }
 
 function renderFeed() {
@@ -87,7 +98,7 @@ function styleBar(j, stat) {
     document.getElementById('bar' + j).style.width = `${stat - 10}%`;
 
     if (stats[j] >= 50) {
-        document.getElementById('bar' + j).style.backgroundColor = "#115411";
+        document.getElementById('bar' + j).style.backgroundColor = "#1d941d";
     } else {
         document.getElementById('bar' + j).style.backgroundColor = "#861010 ";
     }
@@ -179,15 +190,19 @@ function deleteDuplicates(currentPokemon) {
 
 
 function renderfavoritePokemons() {
-    loadLike();
-    document.getElementById('navInput').value = "";
-    placePokemon.innerHTML = "";
-    currentSelection = likedPokemons;
-    for (let i = 0; i < currentSelection.length; i++) {
-        generateFavoritePokemons(i);
-        renderTypes(i);
-    }
+    if (currentSelection === allPokemon) {
+        loadLike();
+        document.getElementById('navInput').value = "";
+        placePokemon.innerHTML = "";
+        currentSelection = likedPokemons;
+        for (let i = 0; i < currentSelection.length; i++) {
+            generateFavoritePokemons(i);
+            renderTypes(i);
+        }
 
+    } else {
+        renderFeed();
+    }
 }
 
 
@@ -345,7 +360,11 @@ function generateBar(j, stat) {
     return `
             <div class="box_num_bar">
                 <div class="box_bar">
-                    <div id="bar${j}" class="bar"></div>
+                    <div id="bar${j}" class="bar">
+                        <p class="   bar_text_d-none">
+                            ${ability[j]}
+                        </p>
+                    </div>
                 </div>
                 <p>${stat}</p>
             </div>`

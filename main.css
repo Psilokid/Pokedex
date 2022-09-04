@@ -113,7 +113,7 @@ main {
 .place_content {
     width: 80%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 1.5rem;
     padding-top: 2rem;
@@ -121,16 +121,30 @@ main {
 }
 
 .box_content {
-    width: 20rem;
+    width: 20.5rem;
     height: 9rem;
     display: flex;
     justify-content: space-between;
     backdrop-filter: blur(4px);
+    box-shadow: 0 0 2.5px 0.2px white;
     background-color: transparent;
     border: solid 1px white;
     border-radius: 0.8rem;
     padding: 1.5rem 1.75rem;
     cursor: pointer;
+}
+
+.btn_load {
+    position: fixed;
+    right: 3rem;
+    bottom: 2rem;
+    border: none;
+    background-color: transparent;
+}
+
+.img_load {
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .place_info {
@@ -198,6 +212,7 @@ main {
 }
 
 .place_opened_pokemon {
+    z-index: 2;
     position: fixed;
     top: 0;
     left: 0;
@@ -301,11 +316,11 @@ main {
 }
 
 .box_main_op {
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding-bottom: 4rem;
     gap: 1rem;
-    flex: 1 50%;
 }
 
 .main_icon_op {
@@ -406,8 +421,15 @@ main {
 .bar {
     height: 100%;
     width: 50%;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
     background-color: white;
     border-radius: 0.5rem;
+}
+
+.bar_text_d-none {
+    display: none;
 }
 
 .place_characteristics_opened {
@@ -446,7 +468,7 @@ main {
     }
 }
 
-@media screen and (max-width:890px) {
+@media screen and (max-width:900px) {
     html {
         font-size: 14px;
     }
@@ -473,15 +495,12 @@ main {
         width: 23rem;
     }
     .place_main_op {
+        flex-direction: column-reverse;
+        align-items: center;
         gap: 2rem;
     }
     .d-none_stats {
         display: none;
-    }
-    .box_main_img_op {
-        position: absolute;
-        top: 6.5rem;
-        right: 5rem;
     }
     .main_img_op {
         width: 12rem;
@@ -529,16 +548,17 @@ main {
     .d-none_heart_des {
         display: none;
     }
-    .box_main_img_op {
-        position: absolute;
-        top: 9rem;
-        right: 4rem;
-    }
     .id {
         padding-top: 3rem;
         font-size: 10rem;
     }
     .box_switch_op {
         gap: 0.5rem;
+    }
+    .box_stats_name {
+        display: none;
+    }
+    .bar_text_d-none {
+        display: unset;
     }
 }
