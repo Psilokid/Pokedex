@@ -4,6 +4,8 @@ let likedPokemons = [];
 let stats = [];
 let ability = ['Hp', 'Attack', 'Defense', 'Speacial Attack', 'Special Defense', 'Speed']
 let placePokemon = document.querySelector('.place_content');
+let body = document.querySelector('body');
+let main = document.querySelector('main')
 let currentSelection;
 
 
@@ -20,19 +22,24 @@ async function GetPokemons() {
     renderFeed();
 }
 
+window.addEventListener('scroll', () => {
+    if (window.scrollY + window.innerHeight >= body.scrollHeight)
+        loadMorePokemons();
+});
+
+
 async function loadMorePokemons() {
 
     for (let i = 0; i < 15; i++) {
         const pokemonUrl = (url + (allPokemon.length + 1))
 
         let response = await fetch(pokemonUrl);
-        let currentPokemon = await response.json();
+        let currentPokemon = await response.json()
         allPokemon.push(currentPokemon);
-
-
     }
     renderFeed();
 }
+
 
 function renderFeed() {
     document.getElementById('navInput').value = "";
@@ -95,7 +102,13 @@ function abilityBar(i) {
 }
 
 function styleBar(j, stat) {
-    document.getElementById('bar' + j).style.width = `${stat - 10}%`;
+    let maxState = 98
+    if (stat >= 98) {
+        document.getElementById('bar' + j).style.width = `${maxState}%`;
+    } else {
+        document.getElementById('bar' + j).style.width = `${stat}%`;
+    }
+
 
     if (stats[j] >= 50) {
         document.getElementById('bar' + j).style.backgroundColor = "#1d941d";
@@ -146,7 +159,7 @@ function filterPokemons() {
     for (let i = 0; i < currentSelection.length; i++) {
         const Pokemon = currentSelection[i];
         if (Pokemon['name'].toLowerCase().includes(search)) {
-            currentSelection === likedPokemons ? generateFavoritePokemons(i) : renderPokemon(i);
+            placePokemon.innerHTML += generatePokemons(i);
             renderTypes(i);
         }
     }
@@ -196,7 +209,7 @@ function renderfavoritePokemons() {
         placePokemon.innerHTML = "";
         currentSelection = likedPokemons;
         for (let i = 0; i < currentSelection.length; i++) {
-            generateFavoritePokemons(i);
+            placePokemon.innerHTML += generatePokemons(i);
             renderTypes(i);
         }
 
@@ -209,9 +222,9 @@ function renderfavoritePokemons() {
 
 function calculateId(i) {
     let id = currentSelection[i]['id'];
-    if (i < 10) {
+    if (i < 9) {
         return `#00${id}`
-    } else if (i < 100) {
+    } else if (i < 99) {
         return `#0${id}`
     } else {
         return `#${id}`
@@ -248,6 +261,34 @@ function openPokemon(i) {
     renderTypesOp(i);
     cmToMeter();
     abilityBar(i);
+    selectBackground(i);
+}
+
+function selectBackground() {
+    let containerName = document.getElementById('placeMainOp');
+    let backGround = document.getElementById('PlaceOpenedPokemon');
+
+    if (containerName.textContent.includes('water')) {
+        backGround.classList.add('water')
+    } else if (containerName.textContent.includes('fire')) {
+        backGround.classList.add('fire')
+    } else if (containerName.textContent.includes('bug')) {
+        backGround.classList.add('grass')
+    } else if (containerName.textContent.includes('grass')) {
+        backGround.classList.add('grass')
+    } else if (containerName.textContent.includes('ground')) {
+        backGround.classList.add('ground')
+    } else if (containerName.textContent.includes('electric')) {
+        backGround.classList.add('electric')
+    } else if (containerName.textContent.includes('poison')) {
+        backGround.classList.add('poison')
+    } else if (containerName.textContent.includes('psych')) {
+        backGround.classList.add('poison')
+    } else if (containerName.textContent.includes('fairy')) {
+        backGround.classList.add('poison')
+    } else {
+        console.log('no');
+    }
 }
 
 function generateOpenPokemon(i) {
@@ -276,7 +317,7 @@ function generateOpenPokemon(i) {
             <div class="main_content_op">
                 <div class="place_main_op">
                     <div class="box_main_op">
-                        <div class="place_main_head_op">
+                        <div id="placeMainOp" class="place_main_head_op">
                             <img class="main_icon_op" src="icons/${currentSelection[i]['types'][0]['type']['name']}.png" />
                             <div class="main_heading_op">
                                 <div id="headingCharacteristics" class="heading_characteristics">
@@ -339,6 +380,8 @@ function generatePokemons(i) {
     </div>`
 }
 
+
+
 function generateTypes(i, type) {
     return `
             <div class="box_characteristics">
@@ -361,25 +404,11 @@ function generateBar(j, stat) {
             <div class="box_num_bar">
                 <div class="box_bar">
                     <div id="bar${j}" class="bar">
-                        <p class="   bar_text_d-none">
+                        <p class="bar_text_res bar_text_d-none">
                             ${ability[j]}
                         </p>
                     </div>
                 </div>
                 <p>${stat}</p>
             </div>`
-}
-
-function generateFavoritePokemons(i) {
-    placePokemon.innerHTML += `
-    <div onclick="openPokemon(${i})" class="box_content">
-       <div class="place_info">
-           <h1 class="pokemon_head">${currentSelection[i]['name']}</h1>
-           <h2 class="pokemon_num">${calculateId(i)}</h2>
-           <div id="place_characteristics${i}" class="place_characteristics">
-           
-           </div>
-       </div>
-       <img class="pokemon_img" src="${currentSelection[i]['sprites']['other']['dream_world']['front_default']}" alt="pokemon">
-   </div>`
 }

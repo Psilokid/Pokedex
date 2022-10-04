@@ -5,7 +5,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    background-attachment: fixed
+    background-attachment: fixed;
 }
 
 body,
@@ -221,8 +221,31 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgb(28, 24, 106);
+    background: rgb(71, 71, 71);
+}
+
+.water {
     background: linear-gradient(0deg, rgba(28, 24, 106, 1) 0%, rgba(43, 116, 167, 1) 64% 100%);
+}
+
+.fire {
+    background: linear-gradient(0deg, rgb(112, 13, 13) 0%, rgb(216, 22, 31) 64% 100%)
+}
+
+.grass {
+    background: linear-gradient(0deg, rgb(20, 88, 33) 0%, rgb(61, 147, 35) 64% 100%)
+}
+
+.ground {
+    background: linear-gradient(0deg, rgb(76, 79, 35) 0%, rgb(196, 192, 85) 64% 100%)
+}
+
+.electric {
+    background: linear-gradient(0deg, rgb(107, 114, 10) 0%, rgb(195, 189, 9) 64% 100%)
+}
+
+.poison {
+    background: linear-gradient(0deg, rgb(72, 17, 92) 0%, rgb(126, 27, 176) 64% 100%)
 }
 
 .place_id {
@@ -370,6 +393,7 @@ main {
 
 .box_main_img_op {
     flex: 1 50%;
+    z-index: -1;
 }
 
 .main_img_op {
@@ -495,15 +519,16 @@ main {
         width: 23rem;
     }
     .place_main_op {
+        z-index: -1;
         flex-direction: column-reverse;
         align-items: center;
-        gap: 2rem;
+        gap: 1rem;
+    }
+    .main_img_op {
+        width: 8.5rem;
     }
     .d-none_stats {
         display: none;
-    }
-    .main_img_op {
-        width: 12rem;
     }
     .id {
         font-size: 13rem;
@@ -524,6 +549,18 @@ main {
     html {
         font-size: 12px;
     }
+    .place_main_op {
+        width: 100%;
+    }
+    .main_content_op {
+        width: unset;
+    }
+    .box_info_op {
+        width: 100%;
+    }
+    .heading_op {
+        font-size: 3rem;
+    }
     .place_nav_input {
         width: 7.5rem;
         height: 1.5rem;
@@ -534,6 +571,9 @@ main {
         align-items: center;
         justify-content: center;
         gap: 2rem;
+    }
+    .main_img_op {
+        width: 7.5rem;
     }
     .icon {
         display: none;
@@ -560,5 +600,15 @@ main {
     }
     .bar_text_d-none {
         display: unset;
+    }
+    .bar_text_res {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .box_num_bar {
+        height: 12.5%;
+    }
+    .bar {
+        border-radius: 0.75rem;
     }
 }
