@@ -248,16 +248,16 @@ function backToOverview() {
     let containerOpenPokemon = document.getElementById('containerOpenPokemon');
 
     containerOpenPokemon.innerHTML = "";
-
-
 }
 
 function openPokemon(i) {
     let containerOpenPokemon = document.getElementById('containerOpenPokemon');
 
     containerOpenPokemon.innerHTML = generateOpenPokemon(i);
-
-    addLikeSymbol(i);
+    if (currentSelection == allPokemon) {
+        document.getElementById('likeHeart').innerHTML = generateLikeButton(i);
+        addLikeSymbol(i);
+    }
     renderTypesOp(i);
     cmToMeter();
     abilityBar(i);
@@ -308,11 +308,9 @@ function generateOpenPokemon(i) {
                     <button class="switch_mid">${currentSelection[i]['name']}</button>
                     <button  onclick="switchNext(${i})" class="switch_outside">${nextPokemon(i)}</button>
                 </div>
-                <button onclick="likePokemon(${i})" class="place_heart_op">
-                  <span class="icon_heart"
-                     ><i id="heart" class="fa-thin far fa-heart"></i
-                  ></span>
-               </button>
+                <div id="likeHeart">
+              
+                </div>
             </div>
             <div class="main_content_op">
                 <div class="place_main_op">
@@ -411,4 +409,13 @@ function generateBar(j, stat) {
                 </div>
                 <p>${stat}</p>
             </div>`
+}
+
+function generateLikeButton(i) {
+    return `
+    <button onclick="likePokemon(${i})" class="place_heart_op">
+        <span class="icon_heart">
+            <i id="heart" class="fa-thin far fa-heart"></i>
+        </span>
+    </button>`
 }
