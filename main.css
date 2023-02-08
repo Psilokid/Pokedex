@@ -6,6 +6,7 @@ body {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-attachment: fixed;
+    position: relative;
 }
 
 body,
@@ -475,6 +476,27 @@ main {
 
 .d-none_btnback_des {
     display: unset;
+}
+
+.icons8 a {
+    color: white;
+    margin: 0;
+    padding-left: 0.25rem;
+    text-decoration: none;
+}
+
+.icons8 a:hover {
+    color: #c9c9c9;
+}
+
+.icons8 {
+    color: white;
+    margin: 0;
+    position: absolute;
+    transform: translate(-50%);
+    font-size: 0.9rem;
+    left: 50%;
+    top: 0.35rem;
 }
 
 @media screen and (max-width: 1495px) {
