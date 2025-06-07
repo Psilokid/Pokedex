@@ -84,7 +84,7 @@ function cmToMeter() {
     centimeter = parseFloat(centimeter);
     let meter = centimeter / 100;
 
-    document.getElementById("length").innerHTML = `${meter} meters`;
+    document.getElementById("length").innerHTML = `${meter} Meters`;
 
 }
 
