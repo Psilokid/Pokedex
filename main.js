@@ -2,7 +2,7 @@ let url = `https://pokeapi.co/api/v2/pokemon/`;
 let allPokemon = [];
 let likedPokemons = [];
 let stats = [];
-let ability = ['Hp', 'Attack', 'Defense', 'Speacial Attack', 'Special Defense', 'Speed']
+let ability = ['HP', 'Attack', 'Defense', 'Speacial Attack', 'Special Defense', 'Speed']
 let placePokemon = document.querySelector('.place_content');
 let body = document.querySelector('body');
 let main = document.querySelector('main')
@@ -82,9 +82,9 @@ function renderTypesOp(i) {
 function cmToMeter() {
     let centimeter = document.getElementById('length').textContent;
     centimeter = parseFloat(centimeter);
-    let meter = centimeter / 10;
+    let meter = centimeter / 100;
 
-    document.getElementById("length").innerHTML = `${meter} Meter`;
+    document.getElementById("length").innerHTML = `${meter} meters`;
 
 }
 
@@ -283,14 +283,15 @@ function selectBackground() {
     } else if (containerName.textContent.includes('poison')) {
         backGround.classList.add('poison')
     } else if (containerName.textContent.includes('psych')) {
-        backGround.classList.add('poison')
+        backGround.classList.add('psych')
     } else if (containerName.textContent.includes('fairy')) {
-        backGround.classList.add('poison')
+        backGround.classList.add('fairy')
     } else {
-        console.log('no');
+        console.log('no :(');
     }
 }
 
+// Wer das liest stinkt
 function generateOpenPokemon(i) {
     return `
        <div id="PlaceOpenedPokemon" class="place_opened_pokemon">
